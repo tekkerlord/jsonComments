@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show</title>
+    <%- include('partials/serveStaticAssets.ejs') %>
+</head>
+
+<body>
+
+    <%- include('partials/navbar.ejs') %>
+
+
+        <h2 class="text-center">
+            Edit
+            <small class="text-muted">JSON Comments!</small>
+        </h2>
+
+        <div class="container">
+            <div class="row">
+                <div class="card col-sm mx-auto">
+                    <div class="card-body">
+                        <h5 class="card-title"> -
+                            <%= comment.username %> ID:
+                                <%= comment.id %>
+                        </h5>
+                        <p class="card-text">
+                            <%= comment.comment %>
+                        </p>
+                        <div class="card-link">
+                            <form method="POST" action="/comments/<%= comment.id %>?_method=DELETE ">
+                                <button class="btn btn-primary ">Delete</button>
+                            </form>
+                            <form method="GET" action="/comments/<%= comment.id %>/edit">
+                                <button class="btn btn-primary ">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
