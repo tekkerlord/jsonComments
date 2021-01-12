@@ -1,19 +1,20 @@
 {
     "name": "commentsproject",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "",
-    "main": "server/entry.js",
+    "main": "server/server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "./entry.js"
+        "start": "./server.js"
     },
-    "author": "",
-    "license": "ISC",
+    "author": "Kahlil Bredeson",
+    "license": "MIT",
     "dependencies": {
         "ejs": "^3.1.5",
         "express": "^4.17.1",
         "method-override": "^3.0.0",
-        "nodemon": "^2.0.6",
         "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
     }
 }

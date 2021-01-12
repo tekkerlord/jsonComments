@@ -5,13 +5,14 @@ const express = require('express');
 const router = express.Router();
 const util = require('./utilities.js');
 const { v4: uuidv4 } = require('uuid');
-uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+uuidv4();
 const response = require('./response.js')
 
 
 // pull json to be used in routes
-let json = util.retrieveJsonData(util.link)
+let json = util.retrieveJsonData()
 
+// call error handling middleware from response file
 router.use(response.checkForComments)
 
 // root route
@@ -54,7 +55,7 @@ router.delete('/comments/:id', (req, res) => {
     response.deleteComment(req, res)
 });
 
-
+// wildcard route
 router.get('*', (req, res) => {
     res.send("page doesn't exist silly!")
 })

@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <%- include('partials/serveStaticAssets.ejs') %>
-</head>
+<%- include('partials/head.ejs') %>
 
-<body>
+    <body>
 
-    <%- include('partials/navbar.ejs') %>
+        <%- include('partials/navbar.ejs') %>
 
-        <h2 class="text-center">
-            Comments App
-            <small class="text-muted">With JSON database!</small>
-        </h2>
+            <h2 class="text-center">
+                Comments App
+                <small class="text-muted">With JSON database!</small>
+            </h2>
 
-        <% if (comments != []) { %>
-            <% for (let c of comments) {%>
-                <div class="container">
-                    <div class="row">
-                        <div class="card col-sm-6 mx-auto">
-                            <div class="card-body">
-                                <h5 class="card-title"> -
-                                    <%= c.username %>
-                                </h5>
-                                <p class="card-text">
-                                    <%= c.comment %>
-                                </p>
-                                <form action="/comments/<%= c.id %>">
-                                    <input type="submit" class="btn btn-primary card-link" value="Details">
-                                </form>
+            <% if (comments != []) { %>
+                <% for (let c of comments) {%>
+                    <div class="container">
+                        <div class="row">
+                            <div class="card col-sm-6 mx-auto">
+                                <div class="card-body">
+                                    <h5 class="card-title"> -
+                                        <%= c.username %>
+                                    </h5>
+                                    <p class="card-text">
+                                        <%= c.comment %>
+                                    </p>
+                                    <form action="/comments/<%= c.id %>">
+                                        <input type="submit" class="btn btn-primary card-link" value="Details">
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <% } %>
                     <% } %>
+                        <% } %>
 
 
+                            <%- include('partials/bootstrapJs.ejs') %>
 
-</body>
+    </body>
 
 </html>

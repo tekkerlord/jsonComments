@@ -3,15 +3,16 @@
  */
 const util = require('./utilities.js');
 const { v4: uuidv4 } = require('uuid');
-uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+uuidv4();
 
 // need to pull json data from json.database initially to use in routes
-let json = util.retrieveJsonData(util.link);
+let json = util.retrieveJsonData();
 
 function index(req, res) {
     res.render('index', { comments: json.comments });
 }
 
+// creates new comment in json database
 function create(req, res) {
     if (!req.body.username || !req.body.comment) {
         res.sendStatus(400)
@@ -26,12 +27,13 @@ function create(req, res) {
             comment: comment,
             id: uuidv4()
         })
-        util.writeToJson(link, json)
+        util.writeToJson(json)
         res.status(200)
         res.redirect('/comments');
     }
 }
 
+// checks for matching comment in json file and passes information to show page to be rendered
 function show(req, res) {
     if (!req.params.id) {
         res.sendStatus(400)
@@ -44,6 +46,7 @@ function show(req, res) {
     }
 }
 
+// finds matching comment in json database and passes information to edit page to be rendered
 function edit(req, res) {
     if (!req.params.id) {
         res.sendStatus(400)
@@ -56,6 +59,7 @@ function edit(req, res) {
     }
 }
 
+// finds matching comment ID in json and changes comment text to new comment from edit form
 function update(req, res) {
     if (!req.params.id) {
         res.sendStatus(400)
@@ -65,12 +69,13 @@ function update(req, res) {
         const newComment = req.body.comment.trim();
         const foundComment = util.findId(json, id, res)
         foundComment.comment = newComment;
-        util.writeToJson(link, json)
+        util.writeToJson(json)
         res.status(200)
         res.redirect('/comments')
     }
 }
 
+// finds matching comment to be deleted in json and filters array of comments to include all comments that don't match ID of comment to be deleted and replaces current comment array with new filtered array
 function deleteComment(req, res) {
     if (!req.params.id) {
         res.sendStatus(400)
@@ -81,12 +86,13 @@ function deleteComment(req, res) {
             // moves all comments without matching id into updated array
         comments = json.comments.filter(c => c.id !== id);
         json.comments = comments;
-        util.writeToJson(link, json);
+        util.writeToJson(json);
         res.status(200)
         res.redirect('/comments');
     }
 }
 
+// error handling middleware that checks to make sure comments array exists
 function checkForComments(req, res, next) {
     if (!json.comments) {
         res.sendStatus(500)
