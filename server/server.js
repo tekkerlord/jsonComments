@@ -9,10 +9,9 @@ const path = require('path');
  */
 const express = require('express');
 const app = express();
-const { v4: uuidv4 } = require('uuid');
-uuidv4();
 const ejs = require('ejs');
 const methodOverride = require('method-override');
+const mongoose = require('mongoose')
 const routes = require('./routes.js')
 const port = process.env.PORT || 3000;
 /**
@@ -23,6 +22,21 @@ app.set('views', path.join(__dirname, '../views'))
 app.use(express.urlencoded({ extended: true }))
     // set query string method for method-override
 app.use(methodOverride('_method'))
+
+
+/** 
+ * Set up mongoDB connection and require comments model
+ */
+mongoose.connect('mongodb://localhost:27017/commentsApp', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("MONGO CONNECTION OPEN!!!")
+    })
+    .catch(err => {
+        console.log("OH NO MONGO CONNECTION ERROR!!!!")
+        console.log(err)
+    })
+mongoose.Model('Comment')
+
 
 /**
  * Employ router class  
